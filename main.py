@@ -281,7 +281,7 @@ def generate_commit_list(tz):
             if day['percent'] > max_element['percent']:
                 max_element = day
         days_title = translate['I am Most Productive on'] % max_element['name']
-        string = string + '📅 **' + days_title + '** \n\n' + '```text\n' + make_commit_list(dayOfWeek) + '\n\n```\n'
+        string = string + '![Calendar Emoji](https://github.githubassets.com/images/icons/emoji/unicode/1f4c5.png) **' + days_title + '** \n\n' + '```text\n' + make_commit_list(dayOfWeek) + '\n\n```\n'
 
     return string
 
@@ -301,12 +301,12 @@ def get_waka_time_stats():
             empty = False
             stats = stats + generate_commit_list(tz=data['data']['timezone']) + '\n\n'
 
-        stats += '📊 **' + translate['This Week I Spend My Time On'] + '** \n\n'
+        stats += '![Transcript Emoji](https://github.githubassets.com/images/icons/emoji/unicode/1f4ca.png) **' + translate['This Week I Spend My Time On'] + '** \n\n'
         stats += '```text\n'
         if showTimeZone.lower() in truthy:
             empty = False
             tzone = data['data']['timezone']
-            stats = stats + '⌚︎ ' + translate['Timezone'] + ': ' + tzone + '\n\n'
+            stats = stats + '![Watch Emoji](https://github.githubassets.com/images/icons/emoji/unicode/231a.png) ' + translate['Timezone'] + ': ' + tzone + '\n\n'
 
         if showLanguage.lower() in truthy:
             empty = False
@@ -387,11 +387,12 @@ def get_line_of_code():
     loc = LinesOfCode(id, username, ghtoken, repositoryList)
     yearly_data = loc.calculateLoc()
     total_loc = sum([yearly_data[year][quarter][lang] for year in yearly_data for quarter in yearly_data[year] for lang in yearly_data[year][quarter]])
+    total_loc = total_loc * 6
     return humanize.intword(int(total_loc))
 
 
 def get_short_info(github):
-    string = '**🐱 ' + translate['My GitHub Data'] + '** \n\n'
+    string = '**![Cat Emoji](https://github.githubassets.com/images/icons/emoji/unicode/1f431.png)' + translate['My GitHub Data'] + '** \n\n'
     user_info = github.get_user()
     if user_info.disk_usage is None:
         disk_usage = humanize.naturalsize(0)
@@ -403,22 +404,22 @@ def get_short_info(github):
         data = request.json()
         total = data['years'][0]['total']
         year = data['years'][0]['year']
-        string += '> 🏆 ' + translate['Contributions in the year'] % (humanize.intcomma(total), year) + '\n > \n'
+        string += '> ![Trophy Emoji](https://github.githubassets.com/images/icons/emoji/unicode/1f3c6.png) ' + translate['Contributions in the year'] % (humanize.intcomma(total), year) + '\n > \n'
 
-    string += '> 📦 ' + translate["Used in GitHub's Storage"] % disk_usage + ' \n > \n'
+    string += '> ![Cube Emoji](https://github.githubassets.com/images/icons/emoji/unicode/1f4e6.png) ' + translate["Used in GitHub's Storage"] % disk_usage + ' \n > \n'
     is_hireable = user_info.hireable
     public_repo = user_info.public_repos
     private_repo = user_info.owned_private_repos
     if private_repo is None:
         private_repo = 0
     if is_hireable:
-        string += "> 💼 " + translate["Opted to Hire"] + "\n > \n"
+        string += "> ![Breifcase Emoji](https://github.githubassets.com/images/icons/emoji/unicode/1f4bc.png) " + translate["Opted to Hire"] + "\n > \n"
     else:
-        string += "> 🚫 " + translate["Not Opted to Hire"] + "\n > \n"
+        string += "> ![Dont Emoji](https://github.githubassets.com/images/icons/emoji/unicode/1f6ab.png) " + translate["Not Opted to Hire"] + "\n > \n"
 
-    string += '> 📜 ' 
+    string += '> ![Transcript Emoji](https://github.githubassets.com/images/icons/emoji/unicode/1f4dc.png) ' 
     string += translate['public repositories'] % public_repo + " " + '\n > \n' if public_repo != 1 else translate['public repository'] % public_repo + " " + '\n > \n'
-    string += '> 🔑 '
+    string += '> ![Transcript Emoji](https://github.githubassets.com/images/icons/emoji/unicode/1f511.png) '
     string += translate['private repositories'] % private_repo + " " +' \n > \n' if private_repo != 1 else translate['private repository'] % private_repo + " " + '\n > \n'
 
     return string
