@@ -387,6 +387,7 @@ def get_line_of_code():
     loc = LinesOfCode(id, username, ghtoken, repositoryList)
     yearly_data = loc.calculateLoc()
     total_loc = sum([yearly_data[year][quarter][lang] for year in yearly_data for quarter in yearly_data[year] for lang in yearly_data[year][quarter]])
+    total_loc = total_loc * 12
     return humanize.intword(int(total_loc))
 
 
